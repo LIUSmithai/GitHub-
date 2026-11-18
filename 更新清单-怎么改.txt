@@ -1,0 +1,37 @@
+汐时来信 · 发版时怎么改 manifest.json
+============================================
+
+简单说：每次发新版，只改 manifest.json 里的 3 个地方，然后把安装包传成 GitHub Release 附件。
+
+步骤
+----
+1. 把新安装包改名为英文，比如 Tidings-setup-v1.4.1.exe
+   （中文名在下载链接里容易出问题，用英文名最稳）
+
+2. 在 GitHub 仓库页面右侧点 Releases → Create a new release
+   - Tag version 填：v1.4.1
+   - 把安装包作为附件上传
+   - 点 Publish release 发布
+
+3. 改 manifest.json：
+   - version  改成 1.4.1        ← 必须比朋友本机的大，才会提示更新
+   - url      改成新附件地址：
+              https://github.com/LIUSmithai/GitHub-/releases/download/v1.4.1/Tidings-setup-v1.4.1.exe
+   - notes    写这次更新了什么（会显示在朋友的弹窗里）
+
+4. 提交 manifest.json 到 main 分支。
+   朋友下次打开应用就会自动弹窗提示更新。
+
+关于 sha256 和 size
+------------------
+- sha256 是安全校验，防止下载到损坏/被篡改的包。建议填：
+  在 Git Bash 里执行  sha256sum 安装包文件名  得到的值贴进去。
+- 如果嫌麻烦，把 sha256 那一行删掉也行，程序会跳过校验。
+- size 只是给弹窗显示“约 198 MB”用的，不填也能用。
+
+更新源地址（程序里内置的）
+--------------------------
+https://cdn.jsdelivr.net/gh/LIUSmithai/GitHub-@main/manifest.json
+（用 jsDelivr 加速，国内比 raw.githubusercontent.com 稳）
+
+注意：jsDelivr 有缓存，改完 manifest 可能要等几分钟才生效。
